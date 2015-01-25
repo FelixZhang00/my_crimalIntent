@@ -21,6 +21,7 @@ public abstract class SingleFragmentActivity extends FragmentActivity {
 		super.onCreate(arg0);
 		setContentView(R.layout.activity_fragment);
 //		setContentView(getLayoutResId());
+//		test for table
 		FragmentManager fm = getSupportFragmentManager();
 		Fragment fragment = fm.findFragmentById(R.id.fragmentContainer);
 
