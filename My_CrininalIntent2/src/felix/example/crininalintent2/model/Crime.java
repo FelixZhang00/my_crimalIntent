@@ -34,10 +34,11 @@ public class Crime {
 		mId = UUID.fromString(jsonObject.getString(JSON_ID));
 		mDate = new Date(jsonObject.getLong(JSON_DATE));
 		mSolved = jsonObject.getBoolean(JSON_SOLVED);
-		mSuspect = jsonObject.getString(JSON_SUSPECT);
 		if (jsonObject.has(JSON_TITLE)) {
 			mTitle = jsonObject.getString(JSON_TITLE);
 		}
+		
+
 		if (jsonObject.has(JSON_PHOTO)) {
 			mPhoto = new Photo(jsonObject.getJSONObject(JSON_PHOTO));
 		}
@@ -51,17 +52,14 @@ public class Crime {
 		jsonObject.put(JSON_ID, this.mId.toString());
 		jsonObject.put(JSON_DATE, this.mDate.getTime());
 		jsonObject.put(JSON_SOLVED, mSolved);
-
 		jsonObject.put(JSON_TITLE, mTitle);
-
-		if (mSuspect != null) {
-			jsonObject.put(JSON_SUSPECT, mSuspect);
-		}
 
 		// 键值对内部再套键值对的情况
 		if (mPhoto != null) {
 			jsonObject.put(JSON_PHOTO, mPhoto.toJSON());
 		}
+
+		jsonObject.put(JSON_SUSPECT, mSuspect);
 
 		return jsonObject;
 
