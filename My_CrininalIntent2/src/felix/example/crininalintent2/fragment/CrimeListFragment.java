@@ -119,7 +119,6 @@ public class CrimeListFragment extends ListFragment {
 						adapter.notifyDataSetChanged();
 						mode.finish();
 						return true;
-						
 
 					default:
 						return false;
@@ -143,12 +142,23 @@ public class CrimeListFragment extends ListFragment {
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
-		// Crime c = ((CrimeAdapter) getListAdapter()).getItem(position);
 		Crime c = adapter.getItem(position);
-		// Log.d(TAG, c.getTitle() + " is clicked");
-		Intent intent = new Intent(getActivity(), CrimePageActivity.class);
-		intent.putExtra(CrimeFragment.EXTRA_CRIME_ID, c.getId());
-		startActivity(intent);
+		
+		if (getActivity().findViewById(R.id.detailFragmentContainer) == null) {
+			// Crime c = ((CrimeAdapter) getListAdapter()).getItem(position);
+			// Log.d(TAG, c.getTitle() + " is clicked");
+			Intent intent = new Intent(getActivity(), CrimePageActivity.class);
+			intent.putExtra(CrimeFragment.EXTRA_CRIME_ID, c.getId());
+			startActivity(intent);
+		} else {
+			Bundle bundle = new Bundle();
+			bundle.putSerializable(CrimeFragment.EXTRA_CRIME_ID, c.getId());
+			CrimeFragment detailFragment = new CrimeFragment();
+			detailFragment.setArguments(bundle);
+			getActivity().getSupportFragmentManager().beginTransaction()
+					.replace(R.id.detailFragmentContainer, detailFragment)
+					.commit();
+		}
 	}
 
 	private class CrimeAdapter extends ArrayAdapter<Crime> {

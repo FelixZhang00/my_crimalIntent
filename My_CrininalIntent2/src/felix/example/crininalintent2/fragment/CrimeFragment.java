@@ -97,9 +97,11 @@ public class CrimeFragment extends Fragment {
 		// EXTRA_CRIME_ID);
 
 		// UUID crime_id = (UUID) getArguments().get(EXTRA_CRIME_ID);
-		UUID crime_id = (UUID) getArguments().getSerializable(EXTRA_CRIME_ID);
-
-		mCrime = CrimeLab.getInstance(getActivity()).getCrime(crime_id);
+		if(getArguments()!=null){
+			UUID crime_id = (UUID) getArguments().getSerializable(EXTRA_CRIME_ID);
+			
+			mCrime = CrimeLab.getInstance(getActivity()).getCrime(crime_id);			
+		}
 
 		// 设置actionbar 左边的返回键
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
