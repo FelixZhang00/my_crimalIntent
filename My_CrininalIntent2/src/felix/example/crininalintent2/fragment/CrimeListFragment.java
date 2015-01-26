@@ -143,7 +143,7 @@ public class CrimeListFragment extends ListFragment {
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
 		Crime c = adapter.getItem(position);
-		
+
 		if (getActivity().findViewById(R.id.detailFragmentContainer) == null) {
 			// Crime c = ((CrimeAdapter) getListAdapter()).getItem(position);
 			// Log.d(TAG, c.getTitle() + " is clicked");
@@ -223,9 +223,23 @@ public class CrimeListFragment extends ListFragment {
 			Crime crime = new Crime();
 			CrimeLab.getInstance(getActivity()).addCrime(crime);
 
-			Intent intent = new Intent(getActivity(), CrimePageActivity.class);
-			intent.putExtra(CrimeFragment.EXTRA_CRIME_ID, crime.getId());
-			startActivityForResult(intent, 0);
+			if (getActivity().findViewById(R.id.detailFragmentContainer) == null) {
+				Intent intent = new Intent(getActivity(),
+						CrimePageActivity.class);
+				intent.putExtra(CrimeFragment.EXTRA_CRIME_ID, crime.getId());
+				startActivityForResult(intent, 0);
+			} else {
+				Bundle bundle = new Bundle();
+				bundle.putSerializable(CrimeFragment.EXTRA_CRIME_ID,
+						crime.getId());
+				CrimeFragment detailFragment = new CrimeFragment();
+				detailFragment.setArguments(bundle);
+				getActivity().getSupportFragmentManager().beginTransaction()
+						.replace(R.id.detailFragmentContainer, detailFragment)
+						.commit();
+				adapter.notifyDataSetChanged();
+			}
+
 			return true;
 
 		case R.id.menu_item_show_subtitle:

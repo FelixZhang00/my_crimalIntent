@@ -51,8 +51,12 @@ public class Crime {
 		jsonObject.put(JSON_ID, this.mId.toString());
 		jsonObject.put(JSON_DATE, this.mDate.getTime());
 		jsonObject.put(JSON_SOLVED, mSolved);
+
 		jsonObject.put(JSON_TITLE, mTitle);
-		jsonObject.put(JSON_SUSPECT, mSuspect);
+
+		if (mSuspect != null) {
+			jsonObject.put(JSON_SUSPECT, mSuspect);
+		}
 
 		// 键值对内部再套键值对的情况
 		if (mPhoto != null) {
