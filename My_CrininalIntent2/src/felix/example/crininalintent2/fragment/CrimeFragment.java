@@ -97,10 +97,11 @@ public class CrimeFragment extends Fragment {
 		// EXTRA_CRIME_ID);
 
 		// UUID crime_id = (UUID) getArguments().get(EXTRA_CRIME_ID);
-		if(getArguments()!=null){
-			UUID crime_id = (UUID) getArguments().getSerializable(EXTRA_CRIME_ID);
-			
-			mCrime = CrimeLab.getInstance(getActivity()).getCrime(crime_id);			
+		if (getArguments() != null) {
+			UUID crime_id = (UUID) getArguments().getSerializable(
+					EXTRA_CRIME_ID);
+
+			mCrime = CrimeLab.getInstance(getActivity()).getCrime(crime_id);
 		}
 
 		// 设置actionbar 左边的返回键
@@ -128,29 +129,26 @@ public class CrimeFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+
 		View v = inflater.inflate(R.layout.fragment_crime, container, false);
 		mEtCrimeTitle = (EditText) v.findViewById(R.id.et_crime_title);
 		mEtCrimeTitle.setText(mCrime.getTitle());
-
 		mEtCrimeTitle.addTextChangedListener(new TextWatcher() {
 
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before,
 					int count) {
 				mCrime.setTitle(s.toString());
+				CrimeListFragment.getAdapter().notifyDataSetChanged();
 			}
 
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count,
 					int after) {
-				// TODO Auto-generated method stub
-
 			}
 
 			@Override
 			public void afterTextChanged(Editable s) {
-				// TODO Auto-generated method stub
-
 			}
 		});
 
@@ -172,6 +170,24 @@ public class CrimeFragment extends Fragment {
 				dialog.show(fm, DIALOG_CHOICE);
 			}
 		});
+		mBtnCrimeDate.addTextChangedListener(new TextWatcher() {
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
+			}
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+				CrimeListFragment.getAdapter().notifyDataSetChanged();
+
+			}
+		});
 
 		mCbCrimeSolved = (CheckBox) v.findViewById(R.id.cb_crime_solved);
 		mCbCrimeSolved.setChecked(mCrime.isSolved());
@@ -182,7 +198,7 @@ public class CrimeFragment extends Fragment {
 					public void onCheckedChanged(CompoundButton buttonView,
 							boolean isChecked) {
 						mCrime.setSolved(isChecked);
-
+						CrimeListFragment.getAdapter().notifyDataSetChanged();
 					}
 				});
 		mIbtnPicture = (ImageButton) v.findViewById(R.id.ibtn_crime_camera);
@@ -252,7 +268,7 @@ public class CrimeFragment extends Fragment {
 				sendIntent.putExtra(Intent.EXTRA_TEXT, getCrimeReport());
 				sendIntent.setType(HTTP.PLAIN_TEXT_TYPE); // "text/plain" MIME
 															// type
-				
+
 				if (sendIntent.resolveActivity(getActivity()
 						.getPackageManager()) != null) {
 					startActivity(sendIntent);

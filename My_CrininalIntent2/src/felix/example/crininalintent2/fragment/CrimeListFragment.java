@@ -41,8 +41,14 @@ public class CrimeListFragment extends ListFragment {
 	private boolean mSubtitleVisable;
 
 	private ListView mLv;
-	private CrimeAdapter adapter;
+	private static CrimeAdapter adapter;
 	private TextView mTv;
+	
+	
+
+	public static CrimeAdapter getAdapter() {
+		return adapter;
+	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -158,10 +164,11 @@ public class CrimeListFragment extends ListFragment {
 			getActivity().getSupportFragmentManager().beginTransaction()
 					.replace(R.id.detailFragmentContainer, detailFragment)
 					.commit();
+			
 		}
 	}
 
-	private class CrimeAdapter extends ArrayAdapter<Crime> {
+	public class CrimeAdapter extends ArrayAdapter<Crime> {
 
 		public CrimeAdapter(ArrayList<Crime> crimes) {
 			super(getActivity(), 0, crimes);
