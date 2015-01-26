@@ -20,11 +20,10 @@ public abstract class SingleFragmentActivity extends FragmentActivity {
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);
 		setContentView(R.layout.activity_fragment);
-//		setContentView(getLayoutResId());
-//		test for table
+		// setContentView(getLayoutResId());
 		FragmentManager fm = getSupportFragmentManager();
-		Fragment fragment = fm.findFragmentById(R.id.fragmentContainer);
 
+		Fragment fragment = fm.findFragmentById(R.id.fragmentContainer);
 		if (fragment == null) {
 			fragment = createFragment();
 			fm.beginTransaction().add(R.id.fragmentContainer, fragment)

@@ -315,7 +315,6 @@ public class CrimeFragment extends Fragment {
 		}
 
 		if (requestCode == PICK_CONTACT) {
-			// TODO 找到返回的联系人信息
 			Uri contactUri = data.getData();
 
 			Cursor cursor = getActivity().getContentResolver()
